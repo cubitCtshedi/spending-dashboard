@@ -35,7 +35,7 @@ export function PeriodSelector() {
             'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
             selectedPeriod === preset.value && !customStartDate
               ? 'bg-blue-600 text-white'
-              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
           )}
         >
           {preset.label}
@@ -47,14 +47,14 @@ export function PeriodSelector() {
           type="date"
           value={customStartDate}
           onChange={(e) => setCustomDateRange(e.target.value, customEndDate)}
-          className="rounded-lg border border-gray-300 px-2 py-1.5 text-sm"
+          className="rounded-lg border border-gray-300 bg-white px-2 py-1.5 text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200"
         />
         <span className="text-sm text-gray-400">to</span>
         <input
           type="date"
           value={customEndDate}
           onChange={(e) => setCustomDateRange(customStartDate, e.target.value)}
-          className="rounded-lg border border-gray-300 px-2 py-1.5 text-sm"
+          className="rounded-lg border border-gray-300 bg-white px-2 py-1.5 text-sm dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200"
         />
       </div>
     </div>

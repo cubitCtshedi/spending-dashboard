@@ -54,6 +54,10 @@ export function CategoryBreakdown() {
               </Pie>
               <Tooltip
                 formatter={(value) => formatCurrency(Number(value))}
+                contentStyle={{
+                  backgroundColor: 'var(--tooltip-bg, #fff)',
+                  borderColor: 'var(--tooltip-border, #e5e7eb)'
+                }}
               />
             </PieChart>
           </ResponsiveContainer>
@@ -78,19 +82,19 @@ export function CategoryBreakdown() {
                   />
                 </span>
                 <div>
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-sm font-medium text-gray-900 dark:text-white">
                     {cat.name}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
                     {cat.transactionCount} transactions
                   </p>
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-sm font-semibold text-gray-900">
+                <p className="text-sm font-semibold text-gray-900 dark:text-white">
                   {formatCurrency(cat.amount)}
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-500 dark:text-gray-400">
                   {cat.percentage}%
                 </p>
               </div>

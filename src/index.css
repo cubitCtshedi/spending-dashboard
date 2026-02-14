@@ -3,7 +3,19 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --tooltip-bg: #fff;
+    --tooltip-border: #e5e7eb;
+    --tooltip-text: #111827;
+  }
+
+  .dark {
+    --tooltip-bg: #1f2937;
+    --tooltip-border: #374151;
+    --tooltip-text: #f9fafb;
+  }
+
   body {
-    @apply bg-gray-50 text-gray-900 antialiased;
+    @apply bg-gray-50 text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100;
   }
 }

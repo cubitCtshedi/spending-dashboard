@@ -70,8 +70,8 @@ export function SpendingSummaryCards() {
             <card.icon className={cn('h-5 w-5', card.iconColor)} />
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-sm text-gray-500">{card.title}</p>
-            <p className="mt-1 truncate text-xl font-bold text-gray-900">
+            <p className="text-sm text-gray-500 dark:text-gray-400">{card.title}</p>
+            <p className="mt-1 truncate text-xl font-bold text-gray-900 dark:text-white">
               {card.value}
             </p>
             {card.change !== null && (

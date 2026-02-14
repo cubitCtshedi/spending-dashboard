@@ -81,7 +81,7 @@ export function TransactionsTable() {
             {data.transactions.map((txn) => (
               <li
                 key={txn.id}
-                className="flex items-center justify-between rounded-lg border border-gray-100 p-3"
+                className="flex items-center justify-between rounded-lg border border-gray-100 p-3 dark:border-gray-700"
               >
                 <div className="flex items-center gap-3">
                   <span
@@ -97,16 +97,16 @@ export function TransactionsTable() {
                     />
                   </span>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">
                       {txn.merchant}
                     </p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
                       {formatDate(txn.date)}
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm font-semibold text-gray-900">
+                  <p className="text-sm font-semibold text-gray-900 dark:text-white">
                     {formatCurrency(txn.amount)}
                   </p>
                   <Badge label={txn.category} color={txn.categoryColor} />
@@ -119,7 +119,7 @@ export function TransactionsTable() {
           <div className="hidden lg:block">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-200 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <tr className="border-b border-gray-200 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:border-gray-700 dark:text-gray-400">
                   <th className="pb-3 pr-4">Merchant</th>
                   <th className="pb-3 pr-4">Category</th>
                   <th className="pb-3 pr-4">Date</th>
@@ -127,9 +127,9 @@ export function TransactionsTable() {
                   <th className="pb-3 text-right">Amount</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                 {data.transactions.map((txn) => (
-                  <tr key={txn.id} className="group hover:bg-gray-50">
+                  <tr key={txn.id} className="group hover:bg-gray-50 dark:hover:bg-gray-700/50">
                     <td className="py-3 pr-4">
                       <div className="flex items-center gap-3">
                         <span
@@ -145,10 +145,10 @@ export function TransactionsTable() {
                           />
                         </span>
                         <div>
-                          <p className="text-sm font-medium text-gray-900">
+                          <p className="text-sm font-medium text-gray-900 dark:text-white">
                             {txn.merchant}
                           </p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-gray-500 dark:text-gray-400">
                             {txn.description}
                           </p>
                         </div>
@@ -160,13 +160,13 @@ export function TransactionsTable() {
                         color={txn.categoryColor}
                       />
                     </td>
-                    <td className="py-3 pr-4 text-sm text-gray-600">
+                    <td className="py-3 pr-4 text-sm text-gray-600 dark:text-gray-400">
                       {formatDate(txn.date)}
                     </td>
-                    <td className="py-3 pr-4 text-sm text-gray-600">
+                    <td className="py-3 pr-4 text-sm text-gray-600 dark:text-gray-400">
                       {txn.paymentMethod}
                     </td>
-                    <td className="py-3 text-right text-sm font-semibold text-gray-900">
+                    <td className="py-3 text-right text-sm font-semibold text-gray-900 dark:text-white">
                       {formatCurrency(txn.amount)}
                     </td>
                   </tr>
@@ -177,8 +177,8 @@ export function TransactionsTable() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
-              <p className="text-sm text-gray-500">
+            <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-4 dark:border-gray-700">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 Showing {data.pagination.offset + 1}–
                 {Math.min(
                   data.pagination.offset + PAGE_SIZE,
@@ -192,7 +192,7 @@ export function TransactionsTable() {
                   onClick={() =>
                     setTransactionPage(transactionPage - 1)
                   }
-                  className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 disabled:opacity-40"
+                  className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 disabled:opacity-40 dark:hover:bg-gray-700"
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </button>
@@ -201,7 +201,7 @@ export function TransactionsTable() {
                   onClick={() =>
                     setTransactionPage(transactionPage + 1)
                   }
-                  className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 disabled:opacity-40"
+                  className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 disabled:opacity-40 dark:hover:bg-gray-700"
                 >
                   <ChevronRight className="h-4 w-4" />
                 </button>

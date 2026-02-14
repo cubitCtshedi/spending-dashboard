@@ -42,15 +42,15 @@ export function SpendingTrends() {
                 <stop offset="100%" stopColor="#3B82F6" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--tooltip-border)" />
             <XAxis
               dataKey="label"
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, fill: 'var(--tooltip-text)' }}
               tickLine={false}
               axisLine={false}
             />
             <YAxis
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, fill: 'var(--tooltip-text)' }}
               tickLine={false}
               axisLine={false}
               tickFormatter={(v: number) => `R${(v / 1000).toFixed(1)}k`}
@@ -60,7 +60,12 @@ export function SpendingTrends() {
                 formatCurrency(Number(value)),
                 'Spent'
               ]}
-              labelStyle={{ fontWeight: 600 }}
+              labelStyle={{ fontWeight: 600, color: 'var(--tooltip-text)' }}
+              contentStyle={{
+                backgroundColor: 'var(--tooltip-bg)',
+                borderColor: 'var(--tooltip-border)',
+                color: 'var(--tooltip-text)'
+              }}
             />
             <Area
               type="monotone"

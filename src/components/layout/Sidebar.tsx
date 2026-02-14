@@ -29,20 +29,22 @@ export function Sidebar() {
 
       <aside
         className={cn(
-          'fixed left-0 top-0 z-50 flex h-full w-64 flex-col border-r border-gray-200 bg-white transition-transform lg:static lg:translate-x-0',
+          'fixed left-0 top-0 z-50 flex h-full w-64 flex-col border-r border-gray-200 bg-white transition-transform dark:border-gray-700 dark:bg-gray-900 lg:static lg:translate-x-0',
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         {/* Logo area */}
-        <div className="flex h-16 items-center justify-between border-b border-gray-200 px-5">
+        <div className="flex h-16 items-center justify-between border-b border-gray-200 px-5 dark:border-gray-700">
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600">
               <BarChart3 className="h-4 w-4 text-white" />
             </div>
-            <span className="text-lg font-bold text-gray-900">SpendIQ</span>
+            <span className="text-lg font-bold text-gray-900 dark:text-white">
+              SpendIQ
+            </span>
           </div>
           <button onClick={() => setSidebarOpen(false)} className="lg:hidden">
-            <X className="h-5 w-5 text-gray-500" />
+            <X className="h-5 w-5 text-gray-500 dark:text-gray-400" />
           </button>
         </div>
 
@@ -60,8 +62,8 @@ export function Sidebar() {
                 className={cn(
                   'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
                   isActive
-                    ? 'bg-blue-50 text-blue-700'
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
+                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white'
                 )}
               >
                 <item.icon className="h-5 w-5" />
@@ -72,8 +74,10 @@ export function Sidebar() {
         </nav>
 
         {/* Footer */}
-        <div className="border-t border-gray-200 p-4">
-          <p className="text-xs text-gray-400">Customer Spending Insights</p>
+        <div className="border-t border-gray-200 p-4 dark:border-gray-700">
+          <p className="text-xs text-gray-400 dark:text-gray-500">
+            Customer Spending Insights
+          </p>
         </div>
       </aside>
     </>

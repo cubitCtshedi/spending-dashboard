@@ -40,7 +40,7 @@ export function SpendingGoals() {
           <li key={goal.id}>
             <div className="mb-1.5 flex items-center justify-between">
               <div>
-                <span className="text-sm font-medium text-gray-900">
+                <span className="text-sm font-medium text-gray-900 dark:text-white">
                   {goal.category}
                 </span>
                 <span
@@ -49,7 +49,7 @@ export function SpendingGoals() {
                   {STATUS_LABEL[goal.status]}
                 </span>
               </div>
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-gray-500 dark:text-gray-400">
                 {goal.daysRemaining} days left
               </span>
             </div>
@@ -57,7 +57,7 @@ export function SpendingGoals() {
               percentage={goal.percentageUsed}
               status={goal.status}
             />
-            <div className="mt-1 flex justify-between text-xs text-gray-500">
+            <div className="mt-1 flex justify-between text-xs text-gray-500 dark:text-gray-400">
               <span>{formatCurrency(goal.currentSpent)} spent</span>
               <span>{formatCurrency(goal.monthlyBudget)} budget</span>
             </div>
