@@ -1,3 +1,6 @@
+// Reference date for period calculations (latest transaction date)
+export const MOCK_REFERENCE_DATE = new Date('2024-09-16T23:59:59Z')
+
 // ─── 1. Customer Profile ──────────────────────────────────────────
 export const mockCustomerProfile: CustomerProfile = {
   customerId: '12345',

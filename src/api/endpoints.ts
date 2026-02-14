@@ -1,8 +1,11 @@
+import { periodToDateRange } from '@/lib/utils'
+
 import { apiClient } from './client'
 import {
+  MOCK_REFERENCE_DATE,
+  mockCategories,
   mockCustomerProfile,
   mockFilters,
-  mockSpendingByCategory,
   mockSpendingGoals,
   mockSpendingSummaries,
   mockSpendingTrends,
@@ -33,18 +36,81 @@ export function fetchSpendingByCategory(
   if (startDate) params.set('startDate', startDate)
   if (endDate) params.set('endDate', endDate)
 
+  // Compute date range from period or custom dates
+  const range =
+    startDate && endDate
+      ? { startDate, endDate }
+      : periodToDateRange(period, MOCK_REFERENCE_DATE)
+
+  // Filter transactions within the date range
+  const filtered = mockTransactions.filter((t) => {
+    const date = t.date.split('T')[0]
+    return date >= range.startDate && date <= range.endDate
+  })
+
+  // Build category breakdown from filtered transactions
+  const categoryMap = new Map<string, { amount: number; count: number }>()
+  let totalAmount = 0
+
+  for (const txn of filtered) {
+    const existing = categoryMap.get(txn.category) ?? { amount: 0, count: 0 }
+    existing.amount += txn.amount
+    existing.count += 1
+    categoryMap.set(txn.category, existing)
+    totalAmount += txn.amount
+  }
+
+  const categories = mockCategories
+    .filter((c) => categoryMap.has(c.name))
+    .map((c) => {
+      const data = categoryMap.get(c.name)!
+      return {
+        ...c,
+        amount: Math.round(data.amount * 100) / 100,
+        percentage:
+          totalAmount > 0
+            ? Math.round((data.amount / totalAmount) * 1000) / 10
+            : 0,
+        transactionCount: data.count
+      }
+    })
+    .sort((a, b) => b.amount - a.amount)
+
   return apiClient(
     `/api/customers/${CUSTOMER_ID}/spending/categories?${params}`,
-    mockSpendingByCategory
+    {
+      dateRange: range,
+      totalAmount: Math.round(totalAmount * 100) / 100,
+      categories
+    }
   )
 }
 
-export function fetchSpendingTrends(months = 12): Promise<SpendingTrends> {
+export function fetchSpendingTrends(
+  months = 12,
+  period?: Period
+): Promise<SpendingTrends> {
+  let count = months
+  if (period) {
+    switch (period) {
+      case '7d':
+      case '30d':
+        count = 1
+        break
+      case '90d':
+        count = 3
+        break
+      case '1y':
+        count = 12
+        break
+    }
+  }
+
   const data = {
-    trends: mockSpendingTrends.trends.slice(-months)
+    trends: mockSpendingTrends.trends.slice(-count)
   }
   return apiClient(
-    `/api/customers/${CUSTOMER_ID}/spending/trends?months=${months}`,
+    `/api/customers/${CUSTOMER_ID}/spending/trends?months=${count}`,
     data
   )
 }
@@ -58,22 +124,28 @@ export function fetchTransactions(
     category,
     sortBy = 'date_desc',
     startDate,
-    endDate
+    endDate,
+    period
   } = filters
 
-  // Apply filtering and sorting on mock data
+  const range =
+    startDate && endDate
+      ? { startDate, endDate }
+      : period
+      ? periodToDateRange(period, MOCK_REFERENCE_DATE)
+      : null
+
   let filtered = [...mockTransactions]
 
   if (category) {
     filtered = filtered.filter((t) => t.category === category)
   }
 
-  if (startDate) {
-    filtered = filtered.filter((t) => t.date >= startDate)
-  }
-
-  if (endDate) {
-    filtered = filtered.filter((t) => t.date <= endDate)
+  if (range) {
+    filtered = filtered.filter((t) => {
+      const date = t.date.split('T')[0]
+      return date >= range.startDate && date <= range.endDate
+    })
   }
 
   // Sort

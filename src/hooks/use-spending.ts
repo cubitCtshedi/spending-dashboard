@@ -40,10 +40,10 @@ export function useSpendingCategories(
   })
 }
 
-export function useSpendingTrends(months = 12) {
+export function useSpendingTrends(months = 12, period?: Period) {
   return useQuery({
-    queryKey: ['spendingTrends', months],
-    queryFn: () => fetchSpendingTrends(months),
+    queryKey: ['spendingTrends', months, period],
+    queryFn: () => fetchSpendingTrends(months, period),
     staleTime: STALE_TIME
   })
 }

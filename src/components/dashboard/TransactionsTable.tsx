@@ -1,7 +1,8 @@
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+
 import { useFilters, useTransactions } from '@/hooks/use-spending'
 import { formatCurrency, formatDate } from '@/lib/utils'
 import { useDashboardStore } from '@/stores/dashboard-store'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 import { Badge } from '../ui/Badge'
 import { Card, CardHeader } from '../ui/Card'
@@ -20,6 +21,9 @@ const SORT_OPTIONS = [
 
 export function TransactionsTable() {
   const {
+    selectedPeriod,
+    customStartDate,
+    customEndDate,
     selectedCategory,
     setSelectedCategory,
     transactionSort,
@@ -34,7 +38,10 @@ export function TransactionsTable() {
     limit: PAGE_SIZE,
     offset: transactionPage * PAGE_SIZE,
     category: selectedCategory || undefined,
-    sortBy: transactionSort
+    sortBy: transactionSort,
+    period: selectedPeriod,
+    startDate: customStartDate || undefined,
+    endDate: customEndDate || undefined
   })
 
   const categoryOptions =
@@ -43,9 +50,7 @@ export function TransactionsTable() {
       value: c.name
     })) ?? []
 
-  const totalPages = data
-    ? Math.ceil(data.pagination.total / PAGE_SIZE)
-    : 0
+  const totalPages = data ? Math.ceil(data.pagination.total / PAGE_SIZE) : 0
 
   return (
     <Card>
@@ -129,7 +134,10 @@ export function TransactionsTable() {
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
                 {data.transactions.map((txn) => (
-                  <tr key={txn.id} className="group hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                  <tr
+                    key={txn.id}
+                    className="group hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                  >
                     <td className="py-3 pr-4">
                       <div className="flex items-center gap-3">
                         <span
@@ -155,10 +163,7 @@ export function TransactionsTable() {
                       </div>
                     </td>
                     <td className="py-3 pr-4">
-                      <Badge
-                        label={txn.category}
-                        color={txn.categoryColor}
-                      />
+                      <Badge label={txn.category} color={txn.categoryColor} />
                     </td>
                     <td className="py-3 pr-4 text-sm text-gray-600 dark:text-gray-400">
                       {formatDate(txn.date)}
@@ -189,18 +194,14 @@ export function TransactionsTable() {
               <div className="flex gap-1">
                 <button
                   disabled={transactionPage === 0}
-                  onClick={() =>
-                    setTransactionPage(transactionPage - 1)
-                  }
+                  onClick={() => setTransactionPage(transactionPage - 1)}
                   className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 disabled:opacity-40 dark:hover:bg-gray-700"
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </button>
                 <button
                   disabled={!data.pagination.hasMore}
-                  onClick={() =>
-                    setTransactionPage(transactionPage + 1)
-                  }
+                  onClick={() => setTransactionPage(transactionPage + 1)}
                   className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 disabled:opacity-40 dark:hover:bg-gray-700"
                 >
                   <ChevronRight className="h-4 w-4" />
