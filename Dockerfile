@@ -20,6 +20,7 @@ COPY --from=build /app/dist /usr/share/nginx/html
 # Copy custom nginx config for SPA routing
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
+EXPOSE 8000
 
-CMD ["nginx", "-g", "daemon off;"]
+# Render provides PORT env var — substitute it into nginx config
+CMD sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /tmp/default.conf && mv /tmp/default.conf /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
