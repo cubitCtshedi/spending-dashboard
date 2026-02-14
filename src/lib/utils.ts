@@ -47,6 +47,38 @@ export function cn(...classes: (string | false | undefined | null)[]): string {
 }
 
 /**
+ * Convert a period preset to a concrete date range.
+ * Uses a reference date (defaults to now) so mock data works correctly.
+ */
+export function periodToDateRange(
+  period: Period,
+  referenceDate: Date = new Date()
+): { startDate: string; endDate: string } {
+  const end = new Date(referenceDate)
+  const start = new Date(referenceDate)
+
+  switch (period) {
+    case '7d':
+      start.setDate(start.getDate() - 7)
+      break
+    case '30d':
+      start.setDate(start.getDate() - 30)
+      break
+    case '90d':
+      start.setDate(start.getDate() - 90)
+      break
+    case '1y':
+      start.setFullYear(start.getFullYear() - 1)
+      break
+  }
+
+  return {
+    startDate: start.toISOString().split('T')[0],
+    endDate: end.toISOString().split('T')[0]
+  }
+}
+
+/**
  * Simulated network delay for mock API.
  */
 export function delay(ms = 300): Promise<void> {

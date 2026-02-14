@@ -108,6 +108,7 @@ declare global {
     startDate?: string
     endDate?: string
     sortBy?: SortBy
+    period?: Period
   }
 
   // ─── 6. Spending Goals ────────────────────────────────────────────
