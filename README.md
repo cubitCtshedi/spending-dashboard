@@ -14,6 +14,7 @@ A production-grade, responsive financial analytics dashboard built with React 18
 | Validation | Zod |
 | Styling | Tailwind CSS |
 | Charts | Recharts |
+| Date Utilities | date-fns |
 | Icons | Lucide React |
 | Testing | Vitest + React Testing Library |
 | Linting | ESLint + Prettier |
@@ -26,6 +27,7 @@ A production-grade, responsive financial analytics dashboard built with React 18
 - **Budget Goals** — Progress bars tracking monthly spending limits by category
 - **Transactions Table** — Sortable, filterable, paginated transaction list with category and sort controls
 - **Period Selector** — Quick presets (7d/30d/90d/1y) and custom date range inputs
+- **Dark Mode** — System-aware theme toggle with ThemeProvider
 - **Responsive Layout** — Mobile-first design with collapsible sidebar navigation
 - **4 Routes** — Dashboard, Transactions, Analytics, Goals
 
@@ -100,8 +102,8 @@ yarn types
 # Build the image
 docker build -t spendiq .
 
-# Run the container
-docker run -p 8080:80 spendiq
+# Run the container (PORT defaults to 8000 in the nginx config)
+docker run -p 8080:8000 spendiq
 ```
 
 The app will be available at `http://localhost:8080`.
@@ -109,13 +111,14 @@ The app will be available at `http://localhost:8080`.
 ### What the Dockerfile Does
 
 1. **Build stage** — Installs deps, compiles TypeScript, bundles with Vite
-2. **Serve stage** — Copies the static build into an Nginx Alpine container with SPA routing support
+2. **Serve stage** — Copies the static build into an Nginx Alpine container with SPA routing support and dynamic `PORT` substitution via `envsubst` (Render-compatible)
 
 ## Environment Variables
 
 | Variable | Description | Default |
 |---|---|---|
 | `VITE_API_BASE_URL` | Base URL for the real API (omit to use mock data) | `""` (mock mode) |
+| `PORT` | Port for the Nginx container (used by Render/Docker) | `8000` |
 
 ## Testing Strategy
 
